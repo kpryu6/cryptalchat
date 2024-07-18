@@ -1,4 +1,4 @@
-# Dappcord
+# Cryptalchat
 
 ## Technology Stack & Tools
 
