@@ -4,6 +4,10 @@ const app = express()
 const PORT = process.env.PORT || 3030
 const server = app.listen(PORT, () => console.log(`Listening on ${PORT}\n`))
 
+app.get('/', (req, res) => {
+  res.send('Server is running')
+})
+
 const messages = [
   {
     channel: "1",
@@ -60,14 +64,18 @@ const io = new Server(server, {
 })
 
 io.on('connection', (socket) => {
-  console.log('a user connected')
+  console.log('a user connected');
 
   socket.on('get messages', () => {
-    io.emit('get messages', messages)
-  })
+    io.emit('get messages', messages);
+  });
 
   socket.on('new message', (msg) => {
-    messages.push(msg)
-    io.emit('new message', messages)
-  })
-})
+    messages.push(msg);
+    io.emit('new message', messages);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+});
